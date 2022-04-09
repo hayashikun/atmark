@@ -8,6 +8,6 @@ function __atmark_add -d 'Add key and path'
         exit 1
     end
 
-    echo $argv[1]\t$argv[1] >> $HOME/.atmark 
+    echo $argv[1]\t$argv[2] >> $HOME/.atmark 
 end
 
