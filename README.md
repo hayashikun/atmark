@@ -1,6 +1,6 @@
 # atmark
 
-
+![screenshot](https://raw.githubusercontent.com/hayashikun/atmark/master/screenshot.png)
 
 ## Install
 ```
