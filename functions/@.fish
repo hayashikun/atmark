@@ -5,8 +5,8 @@ function @ -d '@'
         end
     end
 
-    function __echo
-        if set -l index (contains -i -- $argv $__atmark_keys)
+    function __echo -a k
+        if set -l index (contains -i -- $k $__atmark_keys)
             echo $__atmark_values[$index]
         end
     end
@@ -78,6 +78,6 @@ function @ -d '@'
         __delete $argv[1]
         __reload
     else
-        __echo
+        __echo $argv[1]
     end
 end
