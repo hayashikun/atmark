@@ -12,7 +12,13 @@ function @ -d '@'
     end
 
     function __list -d 'List of registered key and path'
-        for i in (seq (count $__atmark_keys))
+        set n (count $__atmark_keys)
+
+        if test n = 0
+            return 1
+        end
+
+        for i in (seq $n)
             echo $__atmark_keys[$i]\t$__atmark_values[$i]
         end
     end
