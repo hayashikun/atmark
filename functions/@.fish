@@ -7,7 +7,7 @@ function @ -d '@'
 
     function __echo -a k
         if set -l index (contains -i -- $k $__atmark_keys)
-            echo $__atmark_values[$index]
+            eval echo $__atmark_values[$index]
         end
     end
 
