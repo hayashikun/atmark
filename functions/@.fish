@@ -1,12 +1,14 @@
 function @ -d '@'
-    
-    function __help -d 'Help'
-        printf 'Usage: @ <key>\n'
-        printf '    -a --add     Adds key and path\n'
-        printf '    -l --list    Shows list\n'
-        printf '    -r --reload  Reloads $HOME/.atmark\n'
-        printf '    -d --delete  Deletes key and path\n'
-        printf '    -h --help    Shows help\n'
+    function __check_dot_atmark
+        if not test -f $HOME/.atmark
+            touch $HOME/.atmark
+        end
+    end
+
+    function __echo
+        if set -l index (contains -i -- $argv $__atmark_keys)
+            echo $__atmark_values[$index]
+        end
     end
 
     function __list -d 'List of registered key and path'
@@ -15,26 +17,19 @@ function @ -d '@'
         end
     end
 
-    function __add -d 'Add key and path'
-        if not test -f $HOME/.atmark
-            touch $HOME/.atmark
-        end
-
-        set key $argv[2]
-        set value $argv[3]
-
-       if test -z $key; or test -z $value
+    function __add -a k v -d 'Add key and path'
+        __check_dot_atmark
+        
+        if test -z $k; or test -z $v
             echo "Invalid arguments"
-            exit 1
+            return 1
         end
 
-        echo $key\t$value >> $HOME/.atmark
+        echo $k\t$v >> $HOME/.atmark
     end
 
     function __reload -d 'Reload key and path'
-        if not test -f $HOME/.atmark
-            touch $HOME/.atmark
-        end
+        __check_dot_atmark
 
         set -e __atmark_keys
         set -e __atmark_values
@@ -45,22 +40,38 @@ function @ -d '@'
         end
     end
 
+    function __delete -a k -d 'Delete key and path'
+        __check_dot_atmark
 
-    set options e/echo h/help a/add l/list r/remove
+        mv $HOME/.atmark $HOME/.atmark.bak
+        sed "/^$k\t/d" $HOME/.atmark.bak > $HOME/.atmark
+    end
+
+    function __help -d 'Help'
+        printf 'Usage: @ <key>\n'
+        printf '    -a --add     Add key and path\n'
+        printf '    -l --list    Show list\n'
+        printf '    -r --reload  Reload $HOME/.atmark\n'
+        printf '    -d --delete  Delete key and path\n'
+        printf '    -h --help    Show help\n'
+    end
+
+    set options a/add l/list r/reload d/delete h/help
     argparse $options -- $argv
-
 
     if set -q _flag_help
         __help
     else if set -q _flag_list
         __list
     else if set -q _flag_add
-        __add
+        __add $argv[1] $argv[2]
+        __reload
     else if set -q _flag_reload
         __reload
+    else if set -q _flag_delete
+        __delete $argv[1]
+        __reload
     else
-        if set -l index (contains -i -- $argv $__atmark_keys)
-            echo $__atmark_values[$index]
-        end
+        __echo
     end
 end
