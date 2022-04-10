@@ -1,5 +1,7 @@
 # atmark
 
+
+
 ## Install
 ```
 $ fisher install hayashikun/atmark
@@ -21,11 +23,11 @@ ws	$HOME/workspace/
 dotfiles	$HOME/.dotfiles
 
 $ @ dev
-$HOME/development
+/home/ryosuke/development
 
 $ @ -a atmark (@ dev)/atmark
 $ @ atmark
-$HOME/development/atmark
+/home/ryosuke/development/atmark
 
 $ cat $HOME/.atmark
 # vim:set noet ts=16 :
