@@ -36,7 +36,7 @@ function @ -d '@'
         for line in (grep -v -e '^\s*#' -e '^\s*$' $HOME/.atmark)
             set kv (string split \t $line)
             set -U __atmark_keys $__atmark_keys $kv[1]
-            set -U __atmark_values $__atmark_values (fish -c "echo $kv[2]")
+            set -U __atmark_values $__atmark_values $kv[2]
         end
     end
 
