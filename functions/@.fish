@@ -1,7 +1,7 @@
 function @ -d '@'
     function __check_dot_atmark
         if not test -f $HOME/.atmark
-            touch $HOME/.atmark
+            echo "# vim:set noet ts=16 :" > $HOME/.atmark
         end
     end
 
