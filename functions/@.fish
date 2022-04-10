@@ -14,7 +14,7 @@ function @ -d '@'
     function __list -d 'List of registered key and path'
         set n (count $__atmark_keys)
 
-        if test n = 0
+        if test $n = 0
             return 1
         end
 
